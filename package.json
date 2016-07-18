@@ -1,18 +1,32 @@
 {
-  "name": "pagarme-bad-code",
+  "name": "pagarme-challenge",
   "version": "1.0.0",
-  "description": "Example of a really bad code",
-  "main": "idnex.js",
+  "description": "My entry in the Pagar.me backend dev challenge",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha test/",
+    "lint": "node_modules/.bin/eslint src/",
+    "start": "node src/server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "João Lucas Lucchetta",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "*",
+    "morgan": "^1.7.0",
     "request": "^2.73.0",
     "request-promise": "^4.0.0",
+    "sequelize": "^3.23.4",
     "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "~3.0.1",
+    "eslint-config-airbnb-base": "^4.0.2",
+    "eslint-plugin-import": "^1.11.0",
+    "mocha": "^2.5.3"
+  },
+  "engines": {
+    "node": "6.2.0"
   }
 }
