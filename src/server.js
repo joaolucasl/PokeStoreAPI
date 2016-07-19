@@ -24,3 +24,5 @@ server.use('/pokemon', pokemonRouter);
 server.use(logger('combined', { stream: logStream }));
 
 server.listen(PORT);
+
+module.exports = exports = server;

@@ -4,7 +4,7 @@
   "description": "My entry in the Pagar.me backend dev challenge",
   "main": "src/server.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha test/",
+    "test": "node_modules/.bin/mocha --recursive test/",
     "lint": "node_modules/.bin/eslint src/",
     "start": "node src/server.js"
   },
@@ -25,8 +25,11 @@
     "eslint": "~3.0.1",
     "eslint-config-airbnb-base": "^4.0.2",
     "eslint-plugin-import": "^1.11.0",
+    "eslint-plugin-mocha": "^4.0.0",
     "jsdoc": "^3.4.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "should": "^10.0.0",
+    "supertest": "^1.2.0"
   },
   "engines": {
     "node": "6.2.0"
