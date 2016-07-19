@@ -1,7 +1,7 @@
 'use strict';
 
-const Pokemon = function (DB, Sequelize) {
-  return DB.define('pokemon', {
+const Pokemon = (DB, Sequelize) =>
+  DB.define('pokemon', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -22,6 +22,6 @@ const Pokemon = function (DB, Sequelize) {
       defaultValue: 1,
     },
   });
-}
+
 
 module.exports = Pokemon;

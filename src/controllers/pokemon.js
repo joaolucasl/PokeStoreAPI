@@ -16,6 +16,5 @@ exports.apiGet = (req, res) => {
       res.status(204).send({
         error: err.msg,
       });
-      console.log(err);
     });
 };

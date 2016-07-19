@@ -14,9 +14,6 @@ const api = request.agent(`http://localhost:${PORT}`);
 chai.use(require('chai-things'));
 
 describe('Pokemon Endpoint', () => {
-
-  let pokemonList = [];
-
   // Application setup functions
   before(() => {
     app.boot();
@@ -30,12 +27,12 @@ describe('Pokemon Endpoint', () => {
       name: 'Bulbasaur',
       price: 250.5,
       stock: 10,
-    }).then(data => pokemonList.push(data.dataValues));
+    });
     Pokemon.create({
       name: 'Ivysaur',
       price: 270.5,
       stock: 8,
-    }).then(data => pokemonList.push(data.dataValues));
+    });
   });
 
   afterEach(() => {
@@ -76,7 +73,5 @@ describe('Pokemon Endpoint', () => {
           return done();
         });
     });
-
   });
-
 });

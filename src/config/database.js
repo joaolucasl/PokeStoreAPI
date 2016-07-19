@@ -18,8 +18,6 @@ const connection = new Sequelize(opt.database, opt.user, opt.password, opt);
 // Searches for Model files imports them to the Connection
 const modelsPath = path.join(__dirname, '/../', 'models/');
 
-
-
 fs.readdirSync(modelsPath)
   .filter(file => (file.indexOf('.') !== 0) && (file.slice(-3) === '.js'))
   .forEach(file => {
