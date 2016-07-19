@@ -1,3 +1,5 @@
 node_modules/
 access.log
 .env
+.vscode/
+pokemonStore.db

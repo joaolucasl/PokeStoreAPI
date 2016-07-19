@@ -8,21 +8,26 @@ const logger = require('morgan');
 const envSetup = require('./config/environment.js');
 const PORT = process.env.PORT || 3000;
 envSetup();
-//  Router definitions imports
-const pokemonRouter = require('./routes/pokemonRouter.js');
-//  const rootRouter = require('./routes/rootRouter.js');
 
-//  HTTP Logging
-const logStream = fs.createWriteStream(`${__dirname}/access.log`, { flags: 'a' });
+const pokemonRouter = require('./routes/pokemonRouter.js'); //  Router definitions imports
+const logStream = fs.createWriteStream(`${__dirname}/access.log`, { flags: 'a' }); //  HTTP Logging
 
-// Application setup
-const server = express();
-
-
+const server = express(); // Application setup
 server.use(bodyParser.json()); //  Middleware to accept JSON payloads only
 server.use('/pokemon', pokemonRouter);
 server.use(logger('combined', { stream: logStream }));
 
-server.listen(PORT);
+//  Setup helper functions
+const boot = () => server.listen(PORT);
+const close = () => server.close;
 
-module.exports = exports = server;
+// If this wasn't required as a module, we start the server automagically
+if (require.main === module) {
+  boot();
+}
+
+module.exports = exports = {
+  app: server,
+  boot,
+  close,
+};
