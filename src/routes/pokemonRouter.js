@@ -1,11 +1,12 @@
 'use strict';
 
 const express = require('express');
+const pokemonController = require('../controllers/pokemon.js');
 
-const PokemonRouter = new express.Router();
+const pokemonRouter = new express.Router();
 
-PokemonRouter.get('/', (req, res) => {
-  res.send('GET POKEMON');
-});
+pokemonRouter
+  .route('/')
+  .get(pokemonController.apiGet);
 
-module.exports = exports = PokemonRouter;
+module.exports = exports = pokemonRouter;
