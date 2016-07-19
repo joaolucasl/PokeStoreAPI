@@ -5,8 +5,10 @@ const setupEnvironment = () => {
   const environment = process.env.NODE_ENV || 'development';
   if (environment === 'development') {
     env.config();
-    env.load();
+  } else if (environment === 'test') {
+    env.config({ path: '.env.test' });
   }
+  env.load();
 };
 
 module.exports = exports = setupEnvironment;
