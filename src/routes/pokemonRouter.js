@@ -7,6 +7,7 @@ const pokemonRouter = new express.Router();
 
 pokemonRouter
   .route('/')
-  .get(pokemonController.apiGet);
+  .get(pokemonController.apiGet)
+  .post(pokemonController.apiPost);
 
 module.exports = exports = pokemonRouter;

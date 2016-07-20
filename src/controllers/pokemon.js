@@ -1,4 +1,5 @@
 'use strict';
+
 const DBConn = require('../config/database.js');
 const Pokemon = DBConn.models.pokemon;
 /**
@@ -10,11 +11,15 @@ const Pokemon = DBConn.models.pokemon;
 exports.apiGet = (req, res) => {
   Pokemon.findAll()
     .then(data => {
-      res.status(200).send(data);
+      res.status(200).json(data);
     })
     .catch((err) => {
-      res.status(204).send({
+      res.status(204).json({
         error: err.msg,
       });
     });
+};
+
+exports.apiPost = (req, res) => {
+  res.status(200).json({ msg: 'Hello' });
 };
