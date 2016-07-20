@@ -10,4 +10,8 @@ pokemonRouter
   .get(pokemonController.apiGet)
   .post(pokemonController.apiPost);
 
+pokemonRouter
+  .route('/:id(\\d+)/') //  Regex to accept only integers
+  .get(pokemonController.apiDetails);
+
 module.exports = exports = pokemonRouter;

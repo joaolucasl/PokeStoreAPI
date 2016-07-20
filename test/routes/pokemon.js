@@ -145,7 +145,7 @@ describe('Pokemon Endpoint', () => {
   });
 
   describe('POST', () => {
-    it('should return OK ', (done) => {
+    it('should return 201 Created status code ', (done) => {
       const pkmnData = {
         name: 'Charmander',
         price: 740.6,
@@ -153,13 +153,13 @@ describe('Pokemon Endpoint', () => {
       };
       api
         .post('/pokemon/')
-        .expect(200)
+        .expect(201)
         .send(pkmnData)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          expect(res.status).to.be.equal(200);
+          expect(res.status).to.be.equal(201);
           return done();
         });
     });
@@ -174,7 +174,7 @@ describe('Pokemon Endpoint', () => {
       api
         .post('/pokemon/')
         .send(pkmnData)
-        .expect(200)
+        .expect(201)
         .end((err, res) => {
           if (err) {
             return done(err);
@@ -235,7 +235,7 @@ describe('Pokemon Endpoint', () => {
       api
         .post('/pokemon/')
         .send(pkmnData)
-        .expect(200)
+        .expect(201)
         .end((err, res) => {
           if (err) {
             return done(err);
