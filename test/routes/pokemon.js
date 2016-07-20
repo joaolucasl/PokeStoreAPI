@@ -4,6 +4,7 @@ const request = require('supertest');
 const chai = require('chai');
 const Promise = require('bluebird');
 const expect = chai.expect;
+const assert = chai.assert;
 const PORT = process.env.PORT || 3000;
 
 const app = require('../../src/server.js');
@@ -144,7 +145,6 @@ describe('Pokemon Endpoint', () => {
   });
 
   describe('POST', () => {
-
     it('should return OK ', (done) => {
       const pkmnData = {
         name: 'Charmander',
@@ -179,7 +179,68 @@ describe('Pokemon Endpoint', () => {
           if (err) {
             return done(err);
           }
-          expect(res.status).to.be.equal(200);
+          //  Check equality of objects
+          expect({
+            name: res.body.name,
+            price: res.body.price,
+            stock: res.body.stock,
+          })
+          .to.deep.equal(pkmnData);
+          return done();
+        });
+    });
+
+    it('should return an error message when no Name is passed', (done) => {
+      const pkmnData = {
+        price: 830.6,
+        stock: 18,
+      };
+
+      api
+        .post('/pokemon/')
+        .send(pkmnData)
+        .expect(400)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.body).to.contain.keys('error');
+          return done();
+        });
+    });
+    it('should return an error message when no Price is passed', (done) => {
+      const pkmnData = {
+        name: 'Pikachu',
+        stock: 18,
+      };
+
+      api
+        .post('/pokemon/')
+        .send(pkmnData)
+        .expect(400)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.body).to.contain.keys('error');
+          return done();
+        });
+    });
+    it('should set Stock to 1 when no value is passed', (done) => {
+      const pkmnData = {
+        name: 'Pikachu',
+        price: 830.6,
+      };
+
+      api
+        .post('/pokemon/')
+        .send(pkmnData)
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.body).to.contain.property('stock', 1);
           return done();
         });
     });
