@@ -26,10 +26,9 @@ describe('Pokemon Endpoint', () => {
     app.close();
   });
 
-  describe('GET', () => {
-    before((done) =>
-      //  Since SQLite is optimized for transactions, this will lower exec time
-      Promise.resolve(Pokemon.bulkCreate([
+  const seedPkmns = (done) =>
+    Promise
+      .resolve(Pokemon.bulkCreate([
         {
           name: 'Bulbasaur',
           price: 250.5,
@@ -39,8 +38,11 @@ describe('Pokemon Endpoint', () => {
           name: 'Ivysaur',
           price: 270.5,
           stock: 8,
-        }])).then(done())
-    );
+        }]))
+      .then(done());
+
+  describe('GET', () => {
+    before(seedPkmns);
 
     after((done) =>
       Pokemon.destroy({ where: {} }).then(done())
@@ -142,6 +144,51 @@ describe('Pokemon Endpoint', () => {
             });
         }); // Clean the DB to simulate no content
     });
+
+    describe('Details [GET /:id]', () => {
+      before(seedPkmns);
+
+      it('should return 404 if no record matches the Id', (done) => {
+        const pkmnId = 99999;
+        api
+          .get(`/pokemon/${pkmnId}`)
+          .expect(404)
+          .end((err, res) => {
+            if (err) {
+              done(err);
+            }
+            done();
+          });
+      });
+
+      it('should return the same data as the actual record', (done) => {
+        Pokemon
+          .findOne({ where: {} })
+          .then((record) => {
+            api
+              .get(`/pokemon/${record.id}`)
+              .expect(200)
+              .end((err, res) => {
+                if (err) {
+                  done(err);
+                }
+                //  Compare the equality of the objects
+                expect({
+                  name: res.body.name,
+                  price: res.body.price,
+                  stock: res.body.stock,
+                })
+                  .to
+                  .eql({
+                    name: record.name,
+                    price: record.price,
+                    stock: record.stock,
+                  });
+                done();
+              });
+          });
+      });
+    });
   });
 
   describe('POST', () => {
@@ -185,7 +232,7 @@ describe('Pokemon Endpoint', () => {
             price: res.body.price,
             stock: res.body.stock,
           })
-          .to.deep.equal(pkmnData);
+            .to.deep.equal(pkmnData);
           return done();
         });
     });
@@ -231,7 +278,6 @@ describe('Pokemon Endpoint', () => {
         name: 'Pikachu',
         price: 830.6,
       };
-
       api
         .post('/pokemon/')
         .send(pkmnData)
