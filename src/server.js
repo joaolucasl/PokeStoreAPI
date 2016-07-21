@@ -9,14 +9,20 @@ const envSetup = require('./config/environment.js');
 const PORT = process.env.PORT || 3000;
 envSetup();
 
-const pokemonRouter = require('./routes/pokemonRouter.js'); //  Router definitions imports
+//  Router definitions imports
+const pokemonRouter = require('./routes/pokemonRouter.js');
+const purchaseRouter = require('./routes/purchaseRouter.js');
+
+
 const logStream = fs.createWriteStream(`${__dirname}/access.log`, { flags: 'a' }); //  HTTP Logging
 
 const server = express(); // Application setup
 server.use(bodyParser.json()); //  Middleware to accept JSON payloads only
-server.use('/pokemon', pokemonRouter);
 server.use(logger('combined', { stream: logStream }));
 
+//  Route definitions
+server.use('/pokemon', pokemonRouter);
+server.use('/purchase', purchaseRouter);
 //  Setup helper functions
 const boot = () => server.listen(PORT);
 const close = () => server.close;

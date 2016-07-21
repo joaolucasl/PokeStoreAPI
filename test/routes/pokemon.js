@@ -4,7 +4,6 @@ const request = require('supertest');
 const chai = require('chai');
 const Promise = require('bluebird');
 const expect = chai.expect;
-const assert = chai.assert;
 const PORT = process.env.PORT || 3000;
 
 const app = require('../../src/server.js');
@@ -14,8 +13,6 @@ const Pokemon = DBConn.models.pokemon;
 const api = request.agent(`http://localhost:${PORT}`);
 
 chai.use(require('chai-things'));
-
-
 
 describe('Pokemon Endpoint', () => {
   // Application setup functions
@@ -136,11 +133,11 @@ describe('Pokemon Endpoint', () => {
             .expect(200)
             .end((err, res) => {
               if (err) {
-                done(err);
+                return done(err);
               }
               expect(res.status).to.be.equal(200);
               expect(res.body.length).to.be.equal(0);
-              done();
+              return done();
             });
         }); // Clean the DB to simulate no content
     });
@@ -153,11 +150,11 @@ describe('Pokemon Endpoint', () => {
         api
           .get(`/pokemon/${pkmnId}`)
           .expect(404)
-          .end((err, res) => {
+          .end((err) => {
             if (err) {
-              done(err);
+              return done(err);
             }
-            done();
+            return done();
           });
       });
 
@@ -170,7 +167,7 @@ describe('Pokemon Endpoint', () => {
               .expect(200)
               .end((err, res) => {
                 if (err) {
-                  done(err);
+                  return done(err);
                 }
                 //  Compare the equality of the objects
                 expect({
@@ -184,7 +181,7 @@ describe('Pokemon Endpoint', () => {
                     price: record.price,
                     stock: record.stock,
                   });
-                done();
+                return done();
               });
           });
       });

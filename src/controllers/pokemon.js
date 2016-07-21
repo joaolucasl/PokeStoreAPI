@@ -69,7 +69,7 @@ exports.apiPost = (req, res) => {
  * Returns:
  * - `200 OK` with the Pokemon data if found
  * - `404 Not Found` if there's no Pokemon for the given ID
- * - `500 Internal Server Error` if a problem prevented from querying   
+ * - `500 Internal Server Error` if a problem prevented from querying
  *
  * @param {Object} req
  * @param {Object} res
