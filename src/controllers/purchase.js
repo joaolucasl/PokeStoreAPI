@@ -28,7 +28,7 @@ exports.apiPost = (req, res) => {
       if (!pkmn) {
         return res.status(404).json({});
       }
-      //  Checkinf if the operation may be done
+      //  Checking if the operation may be done
       if (pkmn.stock < quantity) {
         return res
           .status(400)
@@ -43,17 +43,21 @@ exports.apiPost = (req, res) => {
         'card_holder_name', 'card_holder_name'];
 
       //  Validating the presence of the required fields
+      const invalidFields = [];
       reqFields.forEach(field => {
         if (!req.body[field]) {
-          return res
-            .status(400)
-            .json({
-              error: `Some ${field} must be passed as parameter`,
-            });
+          invalidFields.push(`You must supply a valid ${field}.`);
+          return false;
         }
         return true;
       });
-
+      if (invalidFields.length >= 1) {
+        return res
+          .status(400)
+          .json({
+            error: invalidFields,
+          });
+      }
       //  After the validatins we request a new transaction with our data
       return request(
         {
@@ -79,12 +83,11 @@ exports.apiPost = (req, res) => {
             newPkmn.stock = pkmn.stock - quantity;
             return newPkmn
               .save()
-              .then(res.send(data)) // All is well, forward Pagarme's response
-              .catch(() => { // Error if couldn't update
-                res.status(500).json({
-                  error: 'The transaction was completed, but there was an error updating stock ',
-                });
-              });
+              .then(() => res.send(data)) // All is well, forward Pagarme's response
+              .catch(() => res.status(500).json({
+                error: 'The transaction was completed, but there was an error updating stock ',
+              })
+              );
           }
 
           let error = 'The payment gateway refused this purchase.';
@@ -95,11 +98,10 @@ exports.apiPost = (req, res) => {
             error,
           });
         })
-        .catch(() => { // Error if couldn't update
+        .catch(() =>
           res.status(500).json({
             error: 'There was an error contacting the payment gateway. Please try again later.',
-          });
-        }
+          })
         );
     });
 };

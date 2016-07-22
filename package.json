@@ -4,7 +4,7 @@
   "description": "My entry in the Pagar.me backend dev challenge",
   "main": "src/server.js",
   "scripts": {
-    "test": "env NODE_ENV=test node_modules/.bin/mocha --recursive test/",
+    "test": "env NODE_ENV=test node_modules/.bin/mocha -t 10000 test/tests.js",
     "lint": "node_modules/.bin/eslint src/",
     "start": "node src/server.js"
   },

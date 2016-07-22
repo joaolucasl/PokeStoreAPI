@@ -1,27 +1,7 @@
 'use strict';
 
-const request = require('supertest');
-const chai = require('chai');
-const Promise = require('bluebird');
-const expect = chai.expect;
-const PORT = process.env.PORT || 3000;
-
-const app = require('../../src/server.js');
-const DBConn = require('../../src/config/database.js');
-const Pokemon = DBConn.models.pokemon;
-
-const api = request.agent(`http://localhost:${PORT}`);
-
-chai.use(require('chai-things'));
-
 describe('Pokemon Endpoint', () => {
   // Application setup functions
-  before(() => {
-    app.boot();
-  });
-  after(() => {
-    app.close();
-  });
 
   const seedPkmns = (done) =>
     Promise
