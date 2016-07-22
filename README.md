@@ -32,6 +32,7 @@ The two available endpoints are `/pokemon` and `purchase`. This API accepts and 
 I updated the original structure to be more compliant with a RESTful API design. Instead of using `actionname-pokemons` as my route naming pattern I leveraged the HTTP methods for different actions:
 
 **Pokemon Endpoint:**
+
 |	METHOD	 |	ACTION  |
 |------------|----------|
 |	GET		|	List All |
@@ -39,6 +40,7 @@ I updated the original structure to be more compliant with a RESTful API design.
 |	POST	|	New Pokemon |
 
 **Purchase Endpoint**
+
 |	METHOD	 |	ACTION  |
 |------------|----------|
 |	POST	|	New Purchase |
